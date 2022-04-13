@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import MainDashboard from '../components/MainDashboard'
 
 import { Divider, ButtonGroup, Button, Box } from '@mui/material'
@@ -6,14 +6,15 @@ import { Divider, ButtonGroup, Button, Box } from '@mui/material'
 import { Modal, Form } from 'react-bootstrap'
 
 import PazientiAttivi from '../services/fetch_patients'
-
+import PazientiAll from '../services/fetch_patients_all'
 
 function Home() {
 
     const nomistanze = ["Entrata", "Corridoio", "Sala Operatoria_4", "Recovery Room"]
     const pazienti_attivi = PazientiAttivi()
+    const pazienti_all = PazientiAll()
 
-    console.log(PazientiAttivi())
+     console.log(pazienti_all)
 
     const [showPaziente, setShowPaziente] = useState(false);
     const handleClosePaziente = () => setShowPaziente(false);
@@ -22,6 +23,10 @@ function Home() {
     const [showBracciale, setShowBracciale] = useState(false);
     const handleCloseBracciale = () => setShowBracciale(false);
     const handleShowBracciale = () => setShowBracciale(true);
+
+    const codice_paziente = useRef()
+    const codice_bracciale = useRef()
+
 
 
     return (
@@ -48,13 +53,13 @@ function Home() {
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Label>Identification Code</Form.Label>
-                    <Form.Control type="id_code" placeholder="Inserisci identification code" />
+                    <Form.Control type="id_code" ref={codice_paziente}  placeholder="Inserisci identification code" />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClosePaziente}>
                         Chiudi
                     </Button>
-                    <Button variant="primary" onClick={handleClosePaziente}>
+                    <Button variant="primary" onClick={event => window.location.href = '/storico_paziente/' + codice_paziente.current.value}>
                         Cerca
                     </Button>
                 </Modal.Footer>
@@ -67,13 +72,13 @@ function Home() {
                 </Modal.Header>
                 <Modal.Body>
                     <Form.Label>Codice braccialetto</Form.Label>
-                    <Form.Control type="id_code" placeholder="Inserisci codice braccialetto" />
+                    <Form.Control type="code_bracciale" ref={codice_bracciale} placeholder="Inserisci codice braccialetto" />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseBracciale}>
                         Chiudi
                     </Button>
-                    <Button variant="primary" onClick={handleCloseBracciale}>
+                    <Button variant="primary" onClick={event => window.location.href = '/storico_paziente/' + pazienti_all[codice_bracciale.current.value]['identification_code']}>
                         Cerca
                     </Button>
                 </Modal.Footer>

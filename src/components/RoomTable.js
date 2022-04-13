@@ -2,6 +2,8 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from 'react-bootstrap';
 
+
+var codice_paziente = " "
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'identification_code', headerName: 'Identification Code', width: 200 },
@@ -11,7 +13,7 @@ const columns = [
         field: 'ora_ingresso',
         headerName: 'Ora Ingresso',
         width: 130,
-        align: 'center',
+        align: 'left',
     //     valueGetter: (params) =>
     //   `${params.row.ora || ''} ${params.row.release_time|| ''}`,
     },
@@ -21,9 +23,9 @@ const columns = [
         sortable: false,
         width: 200,
         align: 'center',
-        renderCell: () => {
+        renderCell: (codice_paziente) => {
             return (
-              <Button variant="success" >
+              <Button variant="success" onClick={event => window.location.href = '/storico_paziente/' + codice_paziente.value}>
                 view patient history
               </Button>
             );
@@ -45,10 +47,14 @@ export const RoomTable = ({ pazienti_attivi }) => {
     pazienti_attivi && pazienti_attivi.map((attivo, index) => (
         data_ingresso = (attivo.time.$date.split("T")[0]),
         ora_ingresso = (attivo.time.$date.split("T")[1]),
+
+        codice_paziente = attivo.identification_code,
+
         rows.push({ id: index + 1, minor: attivo.minor,
             identification_code: attivo.identification_code,
              data_ingresso: data_ingresso,
-             ora_ingresso: ora_ingresso.split(".")[0]})
+             ora_ingresso: ora_ingresso.split(".")[0],
+             button_field: codice_paziente})
     ))
 
 

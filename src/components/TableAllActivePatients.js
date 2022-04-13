@@ -2,6 +2,8 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from 'react-bootstrap';
 
+var codice_paziente = " "
+
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'identification_code', headerName: 'Identification Code', width: 200 },
@@ -15,11 +17,13 @@ const columns = [
         sortable: false,
         width: 200,
         align: 'center',
-        renderCell: () => {
+        renderCell: (codice_paziente) => {
+            console.log(codice_paziente)
             return (
-              <Button variant="success" >
+              <Button variant="success" onClick={event => window.location.href = '/storico_paziente/' + codice_paziente.value}>
                 view patient history
               </Button>
+
             );
           }
     },
@@ -34,22 +38,12 @@ export const TableAllActivePatients = ({ pazienti_all }) => {
 
     const rows = []
 
-    // pazienti_all && Object.keys(pazienti_all).map((oggetto, index) => (
-
-    //     rows.push({ id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
-    //         ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
-    //         ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
-    //         tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0]})
-
-    // ))
-
-
-
     pazienti_all && pazienti_all.map((paziente, index) => (
-
+        codice_paziente = paziente.identification_code,
             rows.push({ id: index + 1, identification_code: paziente.identification_code,
                  minor: paziente.minor,
-                 ora_ingresso: paziente.time.$date.split("T")[1].split(".")[0],})
+                 ora_ingresso: paziente.time.$date.split("T")[1].split(".")[0],
+                 button_field: codice_paziente})
 
     ))
 

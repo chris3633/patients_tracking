@@ -18,6 +18,7 @@ import SensorsList from './pages/SensorsList'
 import AllActivePatients from './pages/AllActivePatients';
 import NavbarTop from './NavbarTop';
 import NonActivePatientsAll from './pages/NonActivePatientsAll';
+import StoricoPaziente from './pages/StoricoPaziente';
 
 
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/dettagliopaziente" element={<DettaglioPaziente/>} />
             <Route path="/sensorslist" element={<SensorsList/>} />
             <Route path="/statistiche_generali"/>
+            <Route path="/storico_paziente/:id_paziente" element={<StoricoPaziente/>}/>
             <Route path="/attiviall" element={<AllActivePatients/>} />
             <Route path="/nonattiviall" element={<NonActivePatientsAll/>} />
           </Routes>

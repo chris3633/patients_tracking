@@ -13,7 +13,6 @@ export default function NavbarTop(props) {
     attivi_tot = attivi_tot + attivo.length
   ))
 
-  console.log(attivi_tot)
   return (
     <Navbar bg="primary" variant="dark">
     <Container>
