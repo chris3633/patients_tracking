@@ -4,10 +4,7 @@ import OppositeContentTimeline from '../components/Timeline'
 import { useParams } from "react-router-dom"
 import Grid from '@mui/material/Grid'
 import CircleTwoToneIcon from '@mui/icons-material/CircleTwoTone';
-
-
 import CollapsibleTable from '../components/TableStoricoPaziente'
-import PazientiAll from '../services/fetch_patients_all'
 import PazientiAttivi from '../services/fetch_patients'
 import { Tooltip } from '@mui/material';
 
@@ -15,8 +12,7 @@ import { Tooltip } from '@mui/material';
 
 
 function StoricoPaziente() {
-
-    const storici_pazienti = FetchStoricoPaziente()
+    var storici_pazienti = FetchStoricoPaziente()
     const pazienti_attivi = PazientiAttivi()
     const lista_attivi = []
     var trovato
@@ -35,41 +31,49 @@ function StoricoPaziente() {
     ))
 
 
-    lista_attivi.includes(id_paziente) ?
-        trovato = true
-        :
-        trovato = false
+    lista_attivi.includes(id_paziente) ? trovato = true : trovato = false
 
-    console.log(lista_attivi)
 
     const [isLoading, setLoading] = useState(true);
-    const [isPresente, setPresente] = useState(true);
+    const [isPresente, setPresente] = useState();
+
+    console.log(isPresente)
+
 
 
     useEffect(() => {
+
         if (storici_pazienti && Object.keys(storici_pazienti).includes(id_paziente)) {
             setPresente(true)
-
-        } else {
-            setPresente(false)
             setLoading(false)
         }
-
-        setLoading(false)
+        else {
+            if (storici_pazienti.length !== 0) {
+                setPresente(false)
+                setLoading(false)
+            }
+        }
     }, [id_paziente, storici_pazienti]);
 
 
     if (isLoading) {
-        return <div className="App">Loading...</div>;
+        return <div className="App">
+            <h2 style={{ marginTop: 40 }} >Loading...
+            </h2>
+        </div>
+
     }
 
     if (!isPresente && !isLoading) {
-        return <div className="App"> Non trovato </div>
+        return <div className="App">
+            <h2 style={{ marginTop: 40 }} >
+                Paziente non trovato!
+            </h2>
+        </div>
     }
 
     if (isPresente && !isLoading) {
         return (
-
             <div>
                 {trovato ?
                     <h2 style={{ marginTop: 40 }} >
@@ -98,6 +102,7 @@ function StoricoPaziente() {
 
             </div>
         )
+
     }
 
 }

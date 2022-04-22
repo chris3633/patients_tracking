@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Row } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import PazientiAttivi from '../services/fetch_patients'
+import { useState, useEffect, useRef } from 'react'
 
-var codice_paziente = ""
+var codice_paziente = " "
+var lista_codici_attivi = []
 
 
 const columns = [
@@ -35,66 +37,106 @@ const columns = [
 export const TableAllNonActivePatients = ({ pazienti_all }) => {
     const pazienti_attivi = PazientiAttivi()
 
-    // console.log(pazienti_all)
-    console.log(pazienti_attivi)
-    const rows = []
+    var rows = []
     const codici_attivi = []
 
-    // pazienti_all && Object.keys(pazienti_all).map((oggetto, index) => (
-    //     codice_paziente = oggetto,
-    //     rows.push({ id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
-    //         ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
-    //         ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
-    //         tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0], button_field: oggetto})
-    // ))
+    const [loading, setLoading] = useState(true)
 
-    // con pazienti_attivi ho la lista degli identification_code di tutti i pazienti attivi.
-    // Effettuo un controllo incrociato con tutti gli identification_code presenti in
-    // pazienti_all per rimuovere dalla tabella dei pazienti non attivi quelli che sono
-    // ancora presenti nel comparto ospedaliero
 
-    pazienti_attivi && pazienti_attivi.map((stanza) => (
-        stanza.map((paziente, indice) => (
-            console.log(paziente['identification_code']),
-            codici_attivi.push(paziente['identification_code'])
+
+        // con pazienti_attivi ho la lista degli identification_code di tutti i pazienti attivi.
+        // Effettuo un controllo incrociato con tutti gli identification_code presenti in
+        // pazienti_all per rimuovere dalla tabella dei pazienti non attivi quelli che sono
+        // ancora presenti nel comparto ospedaliero
+
+
+
+        console.log(pazienti_all)
+        pazienti_attivi && pazienti_attivi.map((stanza) => (
+            stanza.map((paziente, indice) => (
+                // console.log(paziente['identification_code']),
+                codici_attivi.push(paziente['identification_code'])
+            ))
         ))
-    ))
 
-    pazienti_all && Object.keys(pazienti_all).map((oggetto, index) => (
-        codice_paziente = oggetto,
+        // pazienti_all && Object.keys(pazienti_all).map((oggetto, index) => (
+        //     console.log(codici_attivi),
+        //     codice_paziente = oggetto,
+        //     codici_attivi && codici_attivi.length > 0 ?
+        //         codici_attivi.map((codice, indice) => (
+        //             // console.log(codice),
+        //             codice !== codice_paziente ?
+        //                 rows.push({
+        //                     id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
+        //                     ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
+        //                     ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
+        //                     tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0], button_field: oggetto
+        //                 })
 
-        codici_attivi.length > 0 ?
-            codici_attivi.map((codice, indice) => (
-                console.log(codice),
-                codice !== codice_paziente ?
-                    rows.push({
-                        id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
-                        ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
-                        ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
-                        tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0], button_field: oggetto
-                    })
-                    : null
+        //                 : null
+
+        //         ))
+
+        //         :
+        //         rows.push({
+        //             id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
+        //             ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
+        //             ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
+        //             tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0], button_field: oggetto
+        //         })
+        //         ))
+
+
+        // if(codici_attivi && codici_attivi.length > 0){
+            codici_attivi.map((codice) => (
+                lista_codici_attivi.push(codice)
             ))
 
-            :
-            rows.push({
-                id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
-                ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
-                ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
-                tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0], button_field: oggetto
-            })
-    ))
 
-    return (
-        <div style={{ height: 550, width: '85%', margin: 'auto', marginTop: 80 }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={8}
-                rowsPerPageOptions={[5]}
-                // checkboxSelection
-                isRowSelectable={() => false}
-            />
-        </div>
-    );
+        pazienti_all && Object.keys(pazienti_all).map((oggetto, index) => (
+            console.log(codici_attivi),
+            codice_paziente = oggetto,
+            lista_codici_attivi.includes(codice_paziente) ?
+
+                    null
+
+                    :
+                        rows.push({
+                            id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
+                            ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
+                            ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
+                            tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0], button_field: oggetto
+                        })
+
+
+
+                // :
+                // rows.push({
+                //     id: index + 1, minor: pazienti_all[oggetto][0].minor, identification_code: oggetto,
+                //     ora_ingresso: pazienti_all[oggetto][0].ora_ingresso.$date.split("T")[1].split(".")[0],
+                //     ora_uscita: pazienti_all[oggetto][0].ora_uscita.$date.split("T")[1].split(".")[0],
+                //     tempo_totale: pazienti_all[oggetto][0].tempo_totale.split(".")[0], button_field: oggetto
+                // })
+                ))
+
+
+
+
+
+return (
+    // console.log(rows.length),
+    <div style={{ height: 550, width: '85%', margin: 'auto', marginTop: 80 }}>
+        <DataGrid
+            rows={rows}
+            columns={columns}
+            pageSize={8}
+            rowsPerPageOptions={[8]}
+            // loading={loading}
+            // checkboxSelection
+            isRowSelectable={() => false}
+        />
+
+    </div>
+);
+
 }

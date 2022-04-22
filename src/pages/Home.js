@@ -28,7 +28,6 @@ function Home() {
     const codice_bracciale = useRef()
 
 
-
     return (
         <div style={{ marginTop: 40 }}>
             <ButtonGroup variant="outlined" aria-label="outlined primary button group">
@@ -83,9 +82,8 @@ function Home() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-
         </div>
+
     )
 }
 

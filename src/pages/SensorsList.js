@@ -9,7 +9,7 @@ function SensorsList() {
 
 
   return (
-    <h2 style={{marginTop: 40}}>Sensors List
+    <h2 style={{marginTop: 40}}>Lista sensori
     <SensorsTable sensorslist={sensorslist}/>
     </h2>
   )

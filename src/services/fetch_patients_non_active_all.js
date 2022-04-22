@@ -28,7 +28,7 @@ function PazientiNonAttiviAll() {
         get_pazienti_non_attivi_all();
         const interval = setInterval(() => {
         get_pazienti_non_attivi_all()
-        }, 10000)
+        }, 60000)
 
         return () => clearInterval(interval)
 

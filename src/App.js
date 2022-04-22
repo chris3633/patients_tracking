@@ -19,6 +19,7 @@ import AllActivePatients from './pages/AllActivePatients';
 import NavbarTop from './NavbarTop';
 import NonActivePatientsAll from './pages/NonActivePatientsAll';
 import StoricoPaziente from './pages/StoricoPaziente';
+import StatisticheGenerali from './pages/StatisticheGenerali';
 
 
 
@@ -33,7 +34,7 @@ function App() {
             <Route path="/dettagliostanza/:idstanza"  element={<DettaglioStanza/>}/>
             <Route path="/dettagliopaziente" element={<DettaglioPaziente/>} />
             <Route path="/sensorslist" element={<SensorsList/>} />
-            <Route path="/statistiche_generali"/>
+            <Route path="/statistiche_generali" element={<StatisticheGenerali/>}/>
             <Route path="/storico_paziente/:id_paziente" element={<StoricoPaziente/>}/>
             <Route path="/attiviall" element={<AllActivePatients/>} />
             <Route path="/nonattiviall" element={<NonActivePatientsAll/>} />

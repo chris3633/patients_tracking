@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -14,28 +13,7 @@ import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-function createData(name, calories, fat, carbs, protein, price) {
-    return {
-        name,
-        calories,
-        fat,
-        carbs,
-        protein,
-        price,
-        history: [
-            {
-                date: '2020-01-05',
-                customerId: '11091700',
-                amount: 3,
-            },
-            {
-                date: '2020-01-02',
-                customerId: 'Anonymous',
-                amount: 1,
-            },
-        ],
-    };
-}
+
 
 function Row(props) {
     const [open, setOpen] = React.useState(false);
@@ -58,7 +36,7 @@ function Row(props) {
 
                 {props.row && props.row.map((occorrenza, index) => (
                     tot_disconnessioni += occorrenza['n_disconnessioni'],
-                    index == (props.row.length - 1) ?
+                    index === (props.row.length - 1) ?
                         <TableCell align="right">{tot_disconnessioni}</TableCell>
                         : null
 
@@ -129,7 +107,7 @@ export default function CollapsibleTable(props) {
                         {lista_stanze.map((stanza, id) => (
                             singole_occorrenze = [],
                             props.storici_pazienti[props.id_paziente] && (props.storici_pazienti[props.id_paziente]).map((occorrenza, index) => (
-                                occorrenza['room'] == stanza ?
+                                occorrenza['room'] === stanza ?
                                     singole_occorrenze.push(occorrenza)
                                     : null,
                                 console.log(singole_occorrenze)

@@ -20,7 +20,7 @@ export default function NavbarTop(props) {
     <Nav className="me-auto">
       <Nav.Link href="/home"><h5>Home</h5></Nav.Link>
       <Nav.Link href="/statistiche_generali"><h5>Statistiche generali</h5></Nav.Link>
-      <Nav.Link href="/sensorslist"><h5>Sensors List</h5></Nav.Link>
+      <Nav.Link href="/sensorslist"><h5>Lista sensori</h5></Nav.Link>
     </Nav>
     </Container>
 

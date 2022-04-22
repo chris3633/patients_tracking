@@ -1,0 +1,69 @@
+import React from 'react'
+import CardStatistiche from '../components/CardStatistiche'
+import { Grid, Divider } from '@mui/material';
+
+import FetchStatistiche from '../services/fetch_statistiche';
+import { ChartTempiMedi } from '../components/ChartTempiStanza';
+
+
+function StatisticheGenerali() {
+
+    const statistiche = FetchStatistiche()
+
+    var statistiche_disconnessioni = {}
+    var dict_stat_disconnessioni = {}
+    var dict_stat_disconnessioni_mese = {}
+    var n_disconnessioni = 0
+
+    var statistiche_stanze = {}
+    var statistiche_comparto = {}
+    var statistiche_interventi = {}
+
+    // salvo le statistiche in variabili divise
+
+    statistiche_disconnessioni = Object(statistiche)['stat_disconnessioni']
+    statistiche_stanze = Object(statistiche)['stat_tempo_medio_stanza']
+    statistiche_comparto = Object(statistiche)['stat_tempo_medio_comparto']
+    statistiche_interventi = Object(statistiche)['stat_interventi']
+
+
+    return (
+        <div>
+        <h2 style={{ marginTop: 40 }}> Statistiche generali        </h2>
+            <Divider style={{ marginTop: 40 }}>Statistiche disconnessioni</Divider>
+            <Grid container spacing={2}  >
+                {
+                   dict_stat_disconnessioni = {},
+                    statistiche_disconnessioni && Object.keys(statistiche_disconnessioni[0]).map((stanza, index) => (
+                        dict_stat_disconnessioni_mese = {},
+                    Object.keys(statistiche_disconnessioni[0][stanza]).map((mese, indice) => (
+
+                    dict_stat_disconnessioni_mese[mese] = statistiche_disconnessioni[0][stanza][mese]
+
+                    )),
+                    dict_stat_disconnessioni[stanza] = dict_stat_disconnessioni_mese,
+                    console.log(dict_stat_disconnessioni),
+                    <Grid item md={3} key={index}>
+                        <CardStatistiche stanza={stanza} elenco_disconnessioni = {dict_stat_disconnessioni}/>
+                    </Grid>
+                ))
+                }
+
+            </Grid>
+            <Divider style={{ marginTop: 40 }}>Statistiche tempi medi per stanza</Divider>
+            <Grid container  spacing={2} >
+
+                <Grid item md={6} >
+            <ChartTempiMedi/>
+            </Grid>
+
+            <Grid item md={6} >
+            <ChartTempiMedi/>
+            </Grid>
+
+            </Grid>
+            </div>
+    )
+}
+
+export default StatisticheGenerali
