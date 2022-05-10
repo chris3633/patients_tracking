@@ -7,7 +7,7 @@ import CircleTwoToneIcon from '@mui/icons-material/CircleTwoTone';
 import CollapsibleTable from '../components/TableStoricoPaziente'
 import PazientiAttivi from '../services/fetch_patients'
 import { Tooltip } from '@mui/material';
-
+import CircularIndeterminate from '../components/CircularLoading'
 
 
 
@@ -58,10 +58,11 @@ function StoricoPaziente() {
 
     if (isLoading) {
         return <div className="App">
-            <h2 style={{ marginTop: 40 }} >Loading...
-            </h2>
-        </div>
-
+        <h2 style={{ marginTop: 40, display:'flex', alignItems: 'center',
+        justifyContent: 'center',}} >
+        <CircularIndeterminate/>
+        </h2>
+    </div>
     }
 
     if (!isPresente && !isLoading) {

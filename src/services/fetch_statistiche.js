@@ -28,7 +28,7 @@ function FetchStatistiche() {
             const interval = setInterval(() => {
                 get_statistiche();
 
-            }, 60000)
+            }, 180000)
 
             return () => clearInterval(interval)
 

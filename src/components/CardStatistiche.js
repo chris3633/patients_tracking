@@ -17,6 +17,14 @@ const bull = (
 );
 
 export default function OutlinedCard(props) {
+
+if(!props.elenco_disconnessioni){
+  return(
+  <div>Loading...</div>
+  )
+  }
+else{
+
   return (
     <Box mx ={5} mt={10} sx={{ maxWidth: 400 , maxHeight:400}}>
       <Card  props = {props} variant="outlined">
@@ -52,4 +60,5 @@ export default function OutlinedCard(props) {
     </Box>
 
   );
+    }
 }
