@@ -35,7 +35,7 @@ function DettaglioStanza() {
   return (
 <div>
     <h2 style={{marginTop: 40}} >
-      Dettagli stanza: {idstanza}
+      Dettaglio stanza: {idstanza}
       {/* <BasicTable pazienti_attivi={pazienti_attivi} /> */}
       <RoomTable pazienti_attivi={pazienti_attivi} />
     </h2>

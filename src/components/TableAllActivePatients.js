@@ -9,7 +9,7 @@ const columns = [
     { field: 'identification_code', headerName: 'Identification Code', width: 200 },
     { field: 'minor', headerName: 'Nr. Braccialetto', width: 130 },
 
-    { field: 'ora_ingresso', headerName: 'Ora ingresso stanza', width: 160 },
+    { field: 'ora_ingresso', headerName: 'Ora ingresso comparto', width: 160 },
 
     {
         field: 'button_field',
